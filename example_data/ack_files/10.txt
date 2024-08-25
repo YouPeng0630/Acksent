@@ -1,0 +1,1 @@
+We thank Enver Candan for his assistance with setting up the Yokogawa wt310 digital power meter. This report is advised by Prof. Yi Lu, supported by NSF grant CNS-1150080.
