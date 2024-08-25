@@ -1,14 +1,4 @@
 import streamlit as st
-
-st.set_page_config(
-    page_title="Qualitative Coding",
-    page_icon="📈",
-    layout="wide"
-)
-st.title('Qualitative Coding')
-
-
-
 import pandas as pd
 import nltk
 from nltk.tokenize import sent_tokenize
@@ -17,9 +7,10 @@ import random
 from datetime import datetime
 
 
-nltk.download('punkt')
-nltk.download('punkt_tab')
-st.session_state.user = 'demo_user'
+
+
+
+
 
 
 
@@ -48,14 +39,26 @@ def increment_i():
 
 
 def main():
-
+    st.set_page_config(
+    page_title="Qualitative Coding",
+    page_icon="📈",
+    layout="wide"
+)
+    st.title('Qualitative Coding')
     current_user = 'demo_user'
+    csv_file = 'example_data/record/record_' + current_user + '.csv'
+    record = pd.read_csv(csv_file)   
+    if 'download' not in st.session_state:
+        nltk.download('punkt')
+        nltk.download('punkt_tab')
+        st.session_state.download = True
 
+
+    st.session_state.user = 'demo_user'
     if 'i' not in st.session_state:
         st.session_state.i = 0
-    csv_file = 'example_data/record/record_' + current_user + '.csv'
-        
-    record = pd.read_csv(csv_file)
+
+    #record = pd.read_csv(csv_file)
     if st.session_state.i >= len(record)-1:
         st.title("Qualitative Coding Completed")
         st.success("Congratulations! You have completed all qualitative coding tasks!")
@@ -70,7 +73,7 @@ def main():
 
         file_name_ac = str(PMID) + ".txt"
 
-        path_for_acknowledgement = "example_data/ack_files/" + str(file_name_ac) 
+        #path_for_acknowledgement = "example_data/ack_files/" + str(file_name_ac) 
 
         file_contents = []
         base_path = r'example_data/ack_files/'
@@ -173,7 +176,7 @@ def main():
         # show update dataframe
         file_name = str(PMID) +'_'+ current_user+'.txt'
         def upload_click():    
-            st.sidebar.write("Successfully uploaded to server")
+            #st.sidebar.write("Successfully uploaded to server")
             record['Progress'][st.session_state.i] = 'Y'
             record.to_csv(csv_file, index=False)
             #fire_test.upload_to_firebase_storage(csv_file, csv_file)
@@ -185,31 +188,36 @@ def main():
             #     file.write(setence_save)
             #fire_test.upload_to_firebase_storage(log_file, log_file)
     
-
-
         def skip_click():
             record['Progress'][st.session_state.i] = 'skip'
             record.to_csv(csv_file, index=False)
             #fire_test.upload_to_firebase_storage(csv_file, csv_file)
-            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            log_file = 'log/log_'+ current_user + '.txt'
-            #local_file_path = fire_test.download_from_folder(log_file)
-            sentence_skip = current_user + " skipped the ETD, which number is " + str(PMID) + ", at " + current_time + "\n"
-            with open(log_file, 'a') as file:
-                file.write(sentence_skip)
+            # current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            # log_file = 'log/log_'+ current_user + '.txt'
+            # #local_file_path = fire_test.download_from_folder(log_file)
+            # sentence_skip = current_user + " skipped the ETD, which number is " + str(PMID) + ", at " + current_time + "\n"
+            # with open(log_file, 'a') as file:
+            #     file.write(sentence_skip)
 
             #fire_test.upload_to_firebase_storage(log_file, log_file)
         st.sidebar.button("Save",on_click=upload_click)
         st.sidebar.button("Skip",on_click=skip_click)
+        st.write(st.session_state.i)
+        st.write(record)
         def back_click():
+            if st.session_state.i == 0:
+                st.write("this is the first sentence")
             if st.session_state.i > 0:
                 if record['Progress'][st.session_state.i] == 'N':
-                    record['Progress'][st.session_state.i - 1] = 'Back'
+                    record['Progress'][st.session_state.i - 1] = 'N'
+                    record.to_csv(csv_file)
                     st.session_state.i -= 1
-                elif record['Progress'][st.session_state.i] == 'Back':
-                    record['Progress'][st.session_state.i] = 'Y'
-                    record['Progress'][st.session_state.i - 1] = 'Back'
-                    st.session_state.i -= 1    
+                    st.write(st.session_state.i)
+                # elif record['Progress'][st.session_state.i] == 'Back':
+                #     record['Progress'][st.session_state.i] = 'Y'
+                #     record['Progress'][st.session_state.i - 1] = 'Back'
+                #     st.session_state.i -= 1
+                #     st.write("step2")  
                 # record.to_csv(csv_file, index=False)
                 #fire_test.upload_to_firebase_storage(csv_file, csv_file)
                 # current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

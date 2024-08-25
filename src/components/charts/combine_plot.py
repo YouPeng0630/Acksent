@@ -153,15 +153,12 @@ def create_combined_plot(selected_user):
 def create_combined_plot1(input_number):
     df_team, difference, yesterday = create_dashboard_figure()
     
-    # 创建一个新的 DataFrame 来表示修改后的数据
     df_modified = df_team.copy()
     df_modified['Count'] = 0
     df_modified.at[df_team.index[-1], 'Count'] = input_number
     
-    # 创建合并后的图表
     fig = go.Figure()
 
-    # 添加团队数据
     fig.add_trace(go.Scatter(
         x=df_team['Date'], y=df_team['Count'],
         mode='lines+markers',
@@ -172,7 +169,6 @@ def create_combined_plot1(input_number):
         textposition='top center'
     ))
 
-    # 添加修改后的数据
     fig.add_trace(go.Scatter(
         x=df_modified['Date'], y=df_modified['Count'],
         mode='lines+markers',
@@ -183,7 +179,6 @@ def create_combined_plot1(input_number):
         textposition='top center'
     ))
 
-    # 更新布局
     fig.update_layout(
         title='Daily Upload Counts (Team vs Modified Data)',
         xaxis_title='Date',
@@ -198,7 +193,6 @@ def create_combined_plot1(input_number):
 
     fig.update_xaxes(tickformat='%Y-%m-%d', tickangle=45)
 
-    # 添加注释
     annotations = []
     for i in range(len(df_team)):
         annotations.append(dict(x=df_team['Date'][i], y=df_team['Count'][i],

@@ -6,7 +6,6 @@ import re
 from PIL import Image
 
 def create_dashboard_figure():
-    # 日志文件路径列表
     log_files = [
         'example_data/logs/log_Amreentaj.txt',
         'example_data/logs/log_Tina.txt',
@@ -22,12 +21,11 @@ def create_dashboard_figure():
         'example_data/logs/log_Manika.txt'
     ]
 
-    date_pattern = r'\d{4}-\d{2}-\d{2}'  # 假设日期格式为 YYYY-MM-DD
+    date_pattern = r'\d{4}-\d{2}-\d{2}'  
     upload_pattern = re.compile(r'upload the coding result of \d+ at \d{4}-\d{2}-\d{2}')
 
     dates = []
 
-    # 解析每个日志文件，提取符合条件的日期
     for log_file in log_files:
         with open(log_file, 'r') as file:
             for line in file:
@@ -36,49 +34,43 @@ def create_dashboard_figure():
                     if match:
                         dates.append(match.group(0))
 
-    # 统计每个日期的记录数
     date_counts = Counter(dates)
 
-    # 将数据转换为DataFrame
+
     df = pd.DataFrame(list(date_counts.items()), columns=['Date', 'Count'])
     df['Date'] = pd.to_datetime(df['Date'])
     df = df.sort_values('Date')
 
-    # 生成一个完整的日期范围
     start_date = df['Date'].min()
     end_date = df['Date'].max()
     all_dates = pd.date_range(start=start_date, end=end_date, freq='D')
 
-    # 将完整的日期范围与统计结果合并，缺少的日期填充为0
     df_all_dates = pd.DataFrame(all_dates, columns=['Date'])
     df = pd.merge(df_all_dates, df, on='Date', how='left')
-    df['Count'] = df['Count'].fillna(0).astype(int)  # 确保计数是整数
+    df['Count'] = df['Count'].fillna(0).astype(int)  
 
-    # 计算最后一天和前一天的差值
+
     if len(df) > 1:
         last_day_count = df.iloc[-2]['Count']
         previous_day_count = df.iloc[-3]['Count']
         difference = last_day_count - previous_day_count
         yesterday = df.iloc[-2]['Count']
     else:
-        difference = 0  # 如果数据不足两天，差值为0
+        difference = 0 
 
-    # 使用 Plotly 绘制折线图并美化
     fig = go.Figure()
 
-    # 添加阴影填充区域
     fig.add_trace(go.Scatter(
         x=df['Date'], y=df['Count'],
         mode='lines+markers',
         marker=dict(size=8, color='rgb(31, 119, 180)'),
         line=dict(width=2, color='rgb(31, 119, 180)'),
-        fill='tozeroy',  # 填充到 y=0
+        fill='tozeroy',
         fillcolor='rgba(31, 119, 180, 0.2)',
         text=df['Count'],
         textposition='top center'
     ))
 
-    # 更新图表布局
     fig.update_layout(
         title='Daily Upload Counts (All Users)',
         xaxis_title='Date',
@@ -109,12 +101,11 @@ def create_dashboard_figure():
 
 def find_indiv(name):
     log_file = f'example_data/logs/log_{name}.txt'
-    date_pattern = r'\d{4}-\d{2}-\d{2}'  # 假设日期格式为 YYYY-MM-DD
+    date_pattern = r'\d{4}-\d{2}-\d{2}' 
     upload_pattern = re.compile(r'upload the coding result of \d+ at \d{4}-\d{2}-\d{2}')
 
     dates = []
 
-    # 解析日志文件，提取符合条件的日期
     with open(log_file, 'r') as file:
         for line in file:
             if upload_pattern.search(line):
@@ -122,40 +113,34 @@ def find_indiv(name):
                 if match:
                     dates.append(match.group(0))
 
-    # 统计每个日期的记录数
+
     date_counts = Counter(dates)
 
-    # 将数据转换为DataFrame
     df = pd.DataFrame(list(date_counts.items()), columns=['Date', 'Count'])
     df['Date'] = pd.to_datetime(df['Date'])
     df = df.sort_values('Date')
 
-    # 生成一个完整的日期范围
     start_date = df['Date'].min()
     end_date = df['Date'].max()
     all_dates = pd.date_range(start=start_date, end=end_date, freq='D')
 
-    # 将完整的日期范围与统计结果合并，缺少的日期填充为0
     df_all_dates = pd.DataFrame(all_dates, columns=['Date'])
     df = pd.merge(df_all_dates, df, on='Date', how='left')
-    df['Count'] = df['Count'].fillna(0).astype(int)  # 确保计数是整数
+    df['Count'] = df['Count'].fillna(0).astype(int) 
 
-    # 使用 Plotly 绘制折线图并美化
     fig = go.Figure()
 
-    # 添加阴影填充区域
     fig.add_trace(go.Scatter(
         x=df['Date'], y=df['Count'],
         mode='lines+markers',
         marker=dict(size=8, color='rgb(31, 119, 180)'),
         line=dict(width=2, color='rgb(31, 119, 180)'),
-        fill='tozeroy',  # 填充到 y=0
+        fill='tozeroy',  
         fillcolor='rgba(31, 119, 180, 0.2)',
         text=df['Count'],
         textposition='top center'
     ))
 
-    # 更新图表布局
     fig.update_layout(
         title=f'Daily Upload Counts ({name})',
         xaxis_title='Date',

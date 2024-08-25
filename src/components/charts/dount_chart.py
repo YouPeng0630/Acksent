@@ -43,13 +43,3 @@ def make_donut(input_response, input_color):
     ).properties(width=130, height=130)
     
     return plot_bg + plot + text
-
-# # Streamlit app
-# st.title('Donut Chart Visualization')
-
-# input_response = st.slider('Input Response', min_value=0, max_value=100, value=50)
-# input_color = st.selectbox('Select Color', ['blue', 'green', 'orange', 'red'])
-
-# donut_chart = make_donut(input_response, input_color)
-
-# st.altair_chart(donut_chart, use_container_width=True)

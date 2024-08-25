@@ -20,46 +20,6 @@ from src.components.charts.progress_plot import create_dashboard_figure
 
 
 
-st.set_page_config(
-    page_title="Progress_Analytics",
-    page_icon="📊",
-    layout="wide"
-)
-
-st.title('Progress Analytics')
-
-support_df = pd.read_csv('example_data/consensus/Support_A.csv')
-sentiment_df = pd.read_csv('example_data/consensus/Sentiment_A.csv')
-record_df = pd.read_csv('example_data/record/record_demo_user.csv')
-
-
-support_length = len(support_df)
-sentiment_length = len(sentiment_df)
-record_length = len(record_df)
-
-support_none = support_df['Consensus'].isna().sum()
-sentiment_none = sentiment_df['Consensus'].isna().sum()
-record_none = record_df['Progress'].isna().sum()
-nltk.download('punkt')
-nltk.download('punkt_tab')
-st.session_state.user = 'demo_user'
-
-file_paths = [
-    'example_data/record/record_Atharv.csv',
-    'example_data/record/record_Manika.csv',
-    'example_data/record/record_Jigyashu.csv',
-    'example_data/record/record_Manali.csv',
-    'example_data/record/record_Nicholas.csv',
-    'example_data/record/record_Nikhil.csv',
-    'example_data/record/record_Amreentaj.csv',
-    'example_data/record/record_Shariq.csv',
-    'example_data/record/record_Haley.csv',
-    'example_data/record/record_Sophie.csv',
-    'example_data/record/record_Satyam.csv',
-    'example_data/record/record_Tina.csv'
-]
-
-
 
 def extract_elements(input_list):
     
@@ -85,6 +45,48 @@ def increment_i():
 
 
 def main():
+
+
+    st.set_page_config(
+        page_title="Progress_Analytics",
+        page_icon="📊",
+        layout="wide"
+    )
+    if 'download' not in st.session_state:
+        nltk.download('punkt')
+        nltk.download('punkt_tab')
+        st.session_state.download = True
+    st.title('Progress Analytics')
+
+    support_df = pd.read_csv('example_data/consensus/Support_A.csv')
+    sentiment_df = pd.read_csv('example_data/consensus/Sentiment_A.csv')
+    record_df = pd.read_csv('example_data/record/record_demo_user.csv')
+
+
+    support_length = len(support_df)
+    sentiment_length = len(sentiment_df)
+    record_length = len(record_df)
+
+    support_none = support_df['Consensus'].isna().sum()
+    sentiment_none = sentiment_df['Consensus'].isna().sum()
+    record_none = record_df['Progress'].isna().sum()
+
+    st.session_state.user = 'demo_user'
+
+    file_paths = [
+        'example_data/record/record_Atharv.csv',
+        'example_data/record/record_Manika.csv',
+        'example_data/record/record_Jigyashu.csv',
+        'example_data/record/record_Manali.csv',
+        'example_data/record/record_Nicholas.csv',
+        'example_data/record/record_Nikhil.csv',
+        'example_data/record/record_Amreentaj.csv',
+        'example_data/record/record_Shariq.csv',
+        'example_data/record/record_Haley.csv',
+        'example_data/record/record_Sophie.csv',
+        'example_data/record/record_Satyam.csv',
+        'example_data/record/record_Tina.csv'
+    ]
 
 
     current_user = 'demo_user'
