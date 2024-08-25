@@ -1,4 +1,24 @@
 import streamlit as st
+import pandas as pd
+import nltk
+from nltk.tokenize import sent_tokenize
+import os
+import random
+
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
+
+# from src.components.charts import create_combined_plot1,make_donut, generate_progress_chart,create_dashboard_figure
+from src.components.charts.combine_plot import create_combined_plot1
+from src.components.charts.test_plot import generate_progress_chart
+from src.components.charts.dount_chart import make_donut
+from src.components.charts.progress_plot import create_dashboard_figure
+
+
+
+
 
 st.set_page_config(
     page_title="Progress_Analytics",
@@ -8,20 +28,9 @@ st.set_page_config(
 
 st.title('Progress Analytics')
 
-
-
-import pandas as pd
-import fire_test
-import nltk
-from nltk.tokenize import sent_tokenize
-import os
-import random
-from datetime import datetime
-
-
-support_df = pd.read_csv('consensus_app/Support_A.csv')
-sentiment_df = pd.read_csv('consensus_app/Sentiment_A.csv')
-record_df = pd.read_csv('record/record_demo_user.csv')
+support_df = pd.read_csv('example_data/consensus/Support_A.csv')
+sentiment_df = pd.read_csv('example_data/consensus/Sentiment_A.csv')
+record_df = pd.read_csv('example_data/record/record_demo_user.csv')
 
 
 support_length = len(support_df)
@@ -34,83 +43,21 @@ record_none = record_df['Progress'].isna().sum()
 nltk.download('punkt')
 nltk.download('punkt_tab')
 st.session_state.user = 'demo_user'
-# import test_plot as tp
-# import progress_plot as pp
-# import create_realationship_plot as crp
-# import dount_chart as dc
-# import fire_test
-# import combine_plot as cb
-# Define the file paths
+
 file_paths = [
-    'record/record_Atharv.csv',
-    'record/record_Manika.csv',
-    'record/record_Jigyashu.csv',
-    'record/record_Manali.csv',
-    'record/record_Nicholas.csv',
-    'record/record_Nikhil.csv',
-    'record/record_Amreentaj.csv',
-    'record/record_Shariq.csv',
-    'record/record_Haley.csv',
-    'record/record_Sophie.csv',
-    'record/record_Satyam.csv',
-    'record/record_Tina.csv'
-
+    'example_data/record/record_Atharv.csv',
+    'example_data/record/record_Manika.csv',
+    'example_data/record/record_Jigyashu.csv',
+    'example_data/record/record_Manali.csv',
+    'example_data/record/record_Nicholas.csv',
+    'example_data/record/record_Nikhil.csv',
+    'example_data/record/record_Amreentaj.csv',
+    'example_data/record/record_Shariq.csv',
+    'example_data/record/record_Haley.csv',
+    'example_data/record/record_Sophie.csv',
+    'example_data/record/record_Satyam.csv',
+    'example_data/record/record_Tina.csv'
 ]
-
-if 'downloaded' not in st.session_state:
-    st.session_state['downloaded'] = True
-    st.session_state['record_file_paths'] = {
-        'Atharv': fire_test.download_from_folder('record/record_Atharv.csv'),
-        'Manika': fire_test.download_from_folder('record/record_Manika.csv'),
-        'Jigyashu': fire_test.download_from_folder('record/record_Jigyashu.csv'),
-        'Manali': fire_test.download_from_folder('record/record_Manali.csv'),
-        'Nicholas': fire_test.download_from_folder('record/record_Nicholas.csv'),
-        'Nikhil': fire_test.download_from_folder('record/record_Nikhil.csv'),
-        'Amreentaj': fire_test.download_from_folder('record/record_Amreentaj.csv'),
-        'Shariq': fire_test.download_from_folder('record/record_Shariq.csv'),
-        'Haley': fire_test.download_from_folder('record/record_Haley.csv'),
-        'Sophie': fire_test.download_from_folder('record/record_Sophie.csv'),
-        'Satyam': fire_test.download_from_folder('record/record_Satyam.csv'),
-        'Tina': fire_test.download_from_folder('record/record_Tina.csv'),
-        'Demo_user':fire_test.download_from_folder('record/record_demo_user.csv'),
-        'Pengfei':fire_test.download_from_folder('record/record_Pengfei.csv')
-        }
-    st.session_state['log_file_paths'] = {
-        'Atharv': fire_test.download_from_folder('log/log_Atharv.txt'),
-        'Manika': fire_test.download_from_folder('log/log_Manika.txt'),
-        'Jigyashu': fire_test.download_from_folder('log/log_Jigyashu.txt'),
-        'Manali': fire_test.download_from_folder('log/log_Manali.txt'),
-        'Nicholas': fire_test.download_from_folder('log/log_Nicholas.txt'),
-        'Nikhil': fire_test.download_from_folder('log/log_Nikhil.txt'),
-        'Amreentaj': fire_test.download_from_folder('log/log_Amreentaj.txt'),
-        'Shariq': fire_test.download_from_folder('log/log_Shariq.txt'),
-        'Haley': fire_test.download_from_folder('log/log_Haley.txt'),
-        'Sophie': fire_test.download_from_folder('log/log_Sophie.txt'),
-        'Satyam': fire_test.download_from_folder('log/log_Satyam.txt'),
-        'Tina': fire_test.download_from_folder('log/log_Tina.txt'),
-        'Demo_user':fire_test.download_from_folder('log/log_demo_user.txt'),
-        'Demo_user':fire_test.download_from_folder('log/log_Pengfei.txt')
-    }
-
-import test_plot as tp
-import progress_plot as pp
-import create_realationship_plot as crp
-import dount_chart as dc
-import fire_test
-import combine_plot as cb
-# def count_handle_Y(file_path):
-#     try:
-#         df = pd.read_csv(file_path)
-#         return df['Progress'].value_counts().get('Y', 0)
-#     except FileNotFoundError:
-#         print(f"File not found: {file_path}")
-#         return 0
-#     except KeyError:
-#         print(f"Column 'handle' not found in: {file_path}")
-#         return 0
-
-# import matplotlib.pyplot as plt
-# import seaborn as sns
 
 
 
@@ -145,8 +92,7 @@ def main():
     if 'i' not in st.session_state:
         st.session_state.i = 0
 
-    csv_file = 'record/record_' + current_user + '.csv'
-    local_file_path = fire_test.download_from_folder(csv_file)
+    csv_file = 'example_data/record/record_' + current_user + '.csv'
     
     record = pd.read_csv(csv_file)
 
@@ -160,14 +106,11 @@ def main():
 
     file_name_ac = str(PMID) + ".txt"
 
-    path_for_acknowledgement = "seperate_acknowledgement/" + str(file_name_ac) 
-
-
-    fire_test.download_from_folder(path_for_acknowledgement)
+    path_for_acknowledgement = "example_data/ack_files/" + str(file_name_ac) 
 
 
     file_contents = []
-    base_path = r'seperate_acknowledgement'
+    base_path = r'example_data/ack_files'
     local_path = os.path.join(base_path, file_name_ac)
 
     print('this is the path' + local_path)
@@ -362,34 +305,34 @@ def main():
             # Calculate the total count across all files
             total_count_Y = int(sum(counts.values()))
             st.markdown('#### Progress')
-            fig, difference, yesterday = pp.create_dashboard_figure()
+            fig, difference, yesterday = create_dashboard_figure()
             # st.metric(label="Yesterday's Upload Count", value=yesterday, delta=str(difference))
             st.metric(label="Yesterday's Upload Count", value=0, delta=str(0))
             st.markdown('#### Qualitative Coding')
             percentage = 100 * ((record_length-record_none) /record_length)
             percentage = round(percentage, 1)
-            donut_chart_total = dc.make_donut(percentage, 'green')
+            donut_chart_total = make_donut(percentage, 'green')
 
             st.altair_chart(donut_chart_total, use_container_width=True)
             
 
         with col[1]:
             st.markdown('#### Team Progress VS Time Chart')
-            st.plotly_chart(cb.create_combined_plot1(record_length-record_none), use_container_width=True)
+            st.plotly_chart(create_combined_plot1(record_length-record_none), use_container_width=True)
 
         with col[2]:
             st.markdown('#### Group Progress')
-            fig2 = tp.generate_progress_chart()
+            fig2 = generate_progress_chart()
             st.plotly_chart(fig2)
     with tab2:
         col = st.columns((1,4),gap = 'medium')
         with col[0]:
             percentage_consensus = round(100 *((support_length+sentiment_length)-(support_none+sentiment_none))/(sentiment_length+support_length),1)
-            dount_chart_consensus = dc.make_donut(percentage_consensus,'green')
+            dount_chart_consensus = make_donut(percentage_consensus,'green')
             st.markdown('####     Consensus')
             st.altair_chart(dount_chart_consensus, use_container_width=True)
         with col[1]:
             st.markdown('#### Team Progress VS Time Chart')
-            st.plotly_chart(cb.create_combined_plot1((support_length+sentiment_length-support_none-sentiment_none)), use_container_width=True)          
+            st.plotly_chart(create_combined_plot1((support_length+sentiment_length-support_none-sentiment_none)), use_container_width=True)          
 if __name__ == "__main__":
     main()

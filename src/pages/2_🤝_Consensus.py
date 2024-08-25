@@ -30,7 +30,6 @@ st.markdown(
 st.title('Consensus')
 
 import pandas as pd
-import fire_test
 import nltk
 from nltk.tokenize import sent_tokenize
 import os
@@ -39,13 +38,6 @@ from datetime import datetime
 nltk.download('punkt')
 nltk.download('punkt_tab')
 st.session_state.user = 'demo_user'
-# import test_plot as tp
-# import progress_plot as pp
-# import create_realationship_plot as crp
-# import dount_chart as dc
-# import fire_test
-# import combine_plot as cb
-# Define the file paths
 file_paths = [
     'record/record_Atharv.csv',
     'record/record_Manika.csv',
@@ -62,61 +54,40 @@ file_paths = [
 
 ]
 
-if 'downloaded' not in st.session_state:
-    st.session_state['downloaded'] = True
-    st.session_state['record_file_paths'] = {
-        'Atharv': fire_test.download_from_folder('record/record_Atharv.csv'),
-        'Manika': fire_test.download_from_folder('record/record_Manika.csv'),
-        'Jigyashu': fire_test.download_from_folder('record/record_Jigyashu.csv'),
-        'Manali': fire_test.download_from_folder('record/record_Manali.csv'),
-        'Nicholas': fire_test.download_from_folder('record/record_Nicholas.csv'),
-        'Nikhil': fire_test.download_from_folder('record/record_Nikhil.csv'),
-        'Amreentaj': fire_test.download_from_folder('record/record_Amreentaj.csv'),
-        'Shariq': fire_test.download_from_folder('record/record_Shariq.csv'),
-        'Haley': fire_test.download_from_folder('record/record_Haley.csv'),
-        'Sophie': fire_test.download_from_folder('record/record_Sophie.csv'),
-        'Satyam': fire_test.download_from_folder('record/record_Satyam.csv'),
-        'Tina': fire_test.download_from_folder('record/record_Tina.csv'),
-        'Demo_user':fire_test.download_from_folder('record/record_demo_user.csv'),
-        'Pengfei':fire_test.download_from_folder('record/record_Pengfei.csv')
-        }
-    st.session_state['log_file_paths'] = {
-        'Atharv': fire_test.download_from_folder('log/log_Atharv.txt'),
-        'Manika': fire_test.download_from_folder('log/log_Manika.txt'),
-        'Jigyashu': fire_test.download_from_folder('log/log_Jigyashu.txt'),
-        'Manali': fire_test.download_from_folder('log/log_Manali.txt'),
-        'Nicholas': fire_test.download_from_folder('log/log_Nicholas.txt'),
-        'Nikhil': fire_test.download_from_folder('log/log_Nikhil.txt'),
-        'Amreentaj': fire_test.download_from_folder('log/log_Amreentaj.txt'),
-        'Shariq': fire_test.download_from_folder('log/log_Shariq.txt'),
-        'Haley': fire_test.download_from_folder('log/log_Haley.txt'),
-        'Sophie': fire_test.download_from_folder('log/log_Sophie.txt'),
-        'Satyam': fire_test.download_from_folder('log/log_Satyam.txt'),
-        'Tina': fire_test.download_from_folder('log/log_Tina.txt'),
-        'Demo_user':fire_test.download_from_folder('log/log_demo_user.txt'),
-        'Demo_user':fire_test.download_from_folder('log/log_Pengfei.txt')
-    }
-
-import test_plot as tp
-import progress_plot as pp
-import create_realationship_plot as crp
-import dount_chart as dc
-import fire_test
-import combine_plot as cb
-# def count_handle_Y(file_path):
-#     try:
-#         df = pd.read_csv(file_path)
-#         return df['Progress'].value_counts().get('Y', 0)
-#     except FileNotFoundError:
-#         print(f"File not found: {file_path}")
-#         return 0
-#     except KeyError:
-#         print(f"Column 'handle' not found in: {file_path}")
-#         return 0
-
-# import matplotlib.pyplot as plt
-# import seaborn as sns
-
+# if 'downloaded' not in st.session_state:
+#     st.session_state['downloaded'] = True
+#     st.session_state['record_file_paths'] = {
+#         'Atharv': fire_test.download_from_folder('record/record_Atharv.csv'),
+#         'Manika': fire_test.download_from_folder('record/record_Manika.csv'),
+#         'Jigyashu': fire_test.download_from_folder('record/record_Jigyashu.csv'),
+#         'Manali': fire_test.download_from_folder('record/record_Manali.csv'),
+#         'Nicholas': fire_test.download_from_folder('record/record_Nicholas.csv'),
+#         'Nikhil': fire_test.download_from_folder('record/record_Nikhil.csv'),
+#         'Amreentaj': fire_test.download_from_folder('record/record_Amreentaj.csv'),
+#         'Shariq': fire_test.download_from_folder('record/record_Shariq.csv'),
+#         'Haley': fire_test.download_from_folder('record/record_Haley.csv'),
+#         'Sophie': fire_test.download_from_folder('record/record_Sophie.csv'),
+#         'Satyam': fire_test.download_from_folder('record/record_Satyam.csv'),
+#         'Tina': fire_test.download_from_folder('record/record_Tina.csv'),
+#         'Demo_user':fire_test.download_from_folder('record/record_demo_user.csv'),
+#         'Pengfei':fire_test.download_from_folder('record/record_Pengfei.csv')
+#         }
+#     st.session_state['log_file_paths'] = {
+#         'Atharv': fire_test.download_from_folder('log/log_Atharv.txt'),
+#         'Manika': fire_test.download_from_folder('log/log_Manika.txt'),
+#         'Jigyashu': fire_test.download_from_folder('log/log_Jigyashu.txt'),
+#         'Manali': fire_test.download_from_folder('log/log_Manali.txt'),
+#         'Nicholas': fire_test.download_from_folder('log/log_Nicholas.txt'),
+#         'Nikhil': fire_test.download_from_folder('log/log_Nikhil.txt'),
+#         'Amreentaj': fire_test.download_from_folder('log/log_Amreentaj.txt'),
+#         'Shariq': fire_test.download_from_folder('log/log_Shariq.txt'),
+#         'Haley': fire_test.download_from_folder('log/log_Haley.txt'),
+#         'Sophie': fire_test.download_from_folder('log/log_Sophie.txt'),
+#         'Satyam': fire_test.download_from_folder('log/log_Satyam.txt'),
+#         'Tina': fire_test.download_from_folder('log/log_Tina.txt'),
+#         'Demo_user':fire_test.download_from_folder('log/log_demo_user.txt'),
+#         'Demo_user':fire_test.download_from_folder('log/log_Pengfei.txt')
+#     }
 
 
 def extract_elements(input_list):
@@ -148,8 +119,8 @@ def main():
     if 'i' not in st.session_state:
         st.session_state.i = 0
 
-    csv_file = 'record/record_' + current_user + '.csv'
-    local_file_path = fire_test.download_from_folder(csv_file)
+    csv_file = 'example_data/record/record_' + current_user + '.csv'
+    #local_file_path = fire_test.download_from_folder(csv_file)
     
     record = pd.read_csv(csv_file)
 
@@ -162,15 +133,10 @@ def main():
     PMID = int(record['handle'][st.session_state.i])
 
     file_name_ac = str(PMID) + ".txt"
-
-    path_for_acknowledgement = "seperate_acknowledgement/" + str(file_name_ac) 
-
-
-    fire_test.download_from_folder(path_for_acknowledgement)
-
-
+    
     file_contents = []
-    base_path = r'seperate_acknowledgement'
+    
+    base_path = r'example_data/ack_files'
     local_path = os.path.join(base_path, file_name_ac)
 
     print('this is the path' + local_path)
@@ -211,13 +177,13 @@ def main():
 
     def save_and_next():
         # Ensure data is saved before the state is incremented
-        if st.session_state['support_sentiment'] == 'Support':
-            target_file = 'consensus_app/Support_A.csv'
-        elif st.session_state['support_sentiment'] == 'Sentiment':
-            target_file = 'consensus_app/Sentiment_A.csv'
+        # if st.session_state['support_sentiment'] == 'Support':
+        #     target_file = 'consensus_app/Support_A.csv'
+        # elif st.session_state['support_sentiment'] == 'Sentiment':
+        #     target_file = 'consensus_app/Sentiment_A.csv'
             
-        consensus_df.to_csv(target_file, index=False, encoding='utf-8')  
-        fire_test.upload_to_firebase_storage(target_file, target_file) 
+        # consensus_df.to_csv(target_file, index=False, encoding='utf-8')  
+        #fire_test.upload_to_firebase_storage(target_file, target_file) 
         st.session_state.consensus_i += 1  
         st.session_state.multiselect = []
         st.session_state.back = False
@@ -233,8 +199,8 @@ def main():
         st.session_state.multiselect = []
 
     # Reload button for support/sentiment data
-    sentimen_file = fire_test.download_from_folder('consensus_app/Sentiment_A.csv')
-    support_file = fire_test.download_from_folder('consensus_app/Support_A.csv')
+    #sentimen_file = fire_test.download_from_folder('consensus_app/Sentiment_A.csv')
+    #support_file = fire_test.download_from_folder('consensus_app/Support_A.csv')
     # Selection box
     selected_task = st.selectbox(
         "Select Task",
@@ -247,9 +213,9 @@ def main():
 
     # Load data based on session state
     if st.session_state['support_sentiment'] == 'Support':
-        consensus_df = pd.read_csv('consensus_app/Support_A.csv')
+        consensus_df = pd.read_csv('example_data/consensus/Support_A.csv')
     elif st.session_state['support_sentiment'] == 'Sentiment':
-        consensus_df = pd.read_csv('consensus_app/Sentiment_A.csv')
+        consensus_df = pd.read_csv('example_data/consensus/Sentiment_A.csv')
     # Main logic for consensus tagging
     if consensus_df['Consensus'].isna().any():
         if st.session_state.consensus_i >= len(consensus_df):
