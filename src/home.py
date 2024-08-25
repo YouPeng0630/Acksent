@@ -74,7 +74,8 @@ with tab2:
     The app is divided into four tabs: **Hello (you are here)**, **Qualitative Coding**, **Consensus**, and **Progress Analytics**.
 
     ## **Qualitative Coding**
-    In this tab, users can view the sentences they need to tag. There are options for **Support** and **Sentiment** tags available for each sentence. A note input box is also provided for adding notes to the sentences. Once users complete coding the current part of sentences, they can upload the tagged sentences to Firebase Storage by clicking the **Save** button on the sidebar.
+    In this tab, users can view the sentences they need to tag. There are options for **Support** and **Sentiment** tags available for each sentence. A note input box is also provided for adding notes to the sentences. 
+    Once users complete coding the current part of sentences, they can upload the tagged sentences to Firebase Storage by clicking the **Save** button on the sidebar. In this demo app, the data will not uploaded to firebase.
 
     - The **Skip** button is for sentences where the user is not sure. It will not upload the record to the server and will show the skipped ETD again the next time the user logs in.
     - The **Back** button allows the user to return to the last ETD they just uploaded. If the user finds something they uploaded is incorrect, they can click it multiple times to go back multiple ETDs.
@@ -87,7 +88,7 @@ with tab2:
     - As with Qualitative Coding, there is a **Back** button to return to the previous step.
 
     ## **Progress Analytics**
-    The Dashboard dynamically displays the user's progress in a task, which is updated in real-time by reading Firebase log records. 
+    The Dashboard dynamically displays the user's progress in a task, which is updated in real-time by reading Firebase log records. Instead of downloading the log files from firebase serve, the demo app will read the files in the githut repo to make the progress analysis charts.
 
     - This dashboard reads different log files and visualizes the data, which can help users and administrators quickly understand data trends, such as performance in coding tasks.
     """
