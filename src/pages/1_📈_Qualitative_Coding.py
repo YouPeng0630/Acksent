@@ -202,8 +202,6 @@ def main():
             #fire_test.upload_to_firebase_storage(log_file, log_file)
         st.sidebar.button("Save",on_click=upload_click)
         st.sidebar.button("Skip",on_click=skip_click)
-        st.write(st.session_state.i)
-        st.write(record)
         def back_click():
             if st.session_state.i == 0:
                 st.write("this is the first sentence")
