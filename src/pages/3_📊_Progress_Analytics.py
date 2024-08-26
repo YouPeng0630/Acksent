@@ -108,7 +108,7 @@ def main():
 
     file_name_ac = str(PMID) + ".txt"
 
-    path_for_acknowledgement = "example_data/ack_files/" + str(file_name_ac) 
+    #path_for_acknowledgement = "example_data/ack_files/" + str(file_name_ac) 
 
 
     file_contents = []
