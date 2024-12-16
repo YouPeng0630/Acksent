@@ -62,11 +62,12 @@ with tab1:
 
     ## Suggested Citation
 
-    Manika Lamba, You Peng, Sophie Nikolov, and J. Stephen Downie. 2024. Acksent Demo App. https://acksent-demo.streamlit.app
+    Manika Lamba, You Peng, Sophie Nikolov, and J. Stephen Downie. 2024. Acksent Demo App. 
 
-     “Acksent: Human Annotated Dataset of Support and Sentiments in Dissertation Acknowledgments” paper.
+    AckSent: Human Annotated Dataset of Support and Sentiments in Dissertation Acknowledgments. In The 2024 ACM/IEEE Joint Conference on Digital Libraries (JCDL ’24), December, 2024, Hong Kong, China. ACM, New York,
+    NY, USA, 5 pages. https://doi.org/10.1145/3677389.3702594
 
-
+    https://acksent-demo.streamlit.app
     """
 )
 with tab2:
