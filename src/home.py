@@ -64,6 +64,8 @@ with tab1:
 
     Manika Lamba, You Peng, Sophie Nikolov, and J. Stephen Downie. 2024. Acksent Demo App. https://acksent-demo.streamlit.app
 
+     “Acksent: Human Annotated Dataset of Support and Sentiments in Dissertation Acknowledgments” paper.
+
 
     """
 )
