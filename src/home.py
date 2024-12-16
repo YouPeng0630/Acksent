@@ -62,7 +62,6 @@ with tab1:
 
     ## Suggested Citation
 
-    https://doi.org/10.1145/3677389.3702594
     Manika Lamba, You Peng, Sophie Nikolov, and J. Stephen Downie. 2024. Acksent Demo App. https://acksent-demo.streamlit.app
 
 
